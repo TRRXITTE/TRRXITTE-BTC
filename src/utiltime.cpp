@@ -8,7 +8,7 @@
 #endif
 
 #include "utiltime.h"
-
+#include <boost/chrono.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/thread.hpp>
 
@@ -65,7 +65,7 @@ void MilliSleep(int64_t n)
 #if defined(HAVE_WORKING_BOOST_SLEEP_FOR)
     boost::this_thread::sleep_for(boost::chrono::milliseconds(n));
 #elif defined(HAVE_WORKING_BOOST_SLEEP)
-    boost::this_thread::sleep(boost::posix_time::milliseconds(n));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(n));
 #else
 //should never get here
 #error missing boost sleep implementation

@@ -760,8 +760,12 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([[
   #include <boost/thread.hpp>
   #include <boost/date_time/posix_time/posix_time_types.hpp>
   ]],[[
-  #if BOOST_VERSION <= 105600
-      boost::this_thread::sleep(boost::posix_time::milliseconds(0));
+#include <boost/chrono.hpp>  // Ensure this is included
+#if BOOST_VERSION <= 105600
+    boost::this_thread::sleep(boost::posix_time::milliseconds(0));
+#else
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(0));
+#endif
   #else
    choke me
   #endif

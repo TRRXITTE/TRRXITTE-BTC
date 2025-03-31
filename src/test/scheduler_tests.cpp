@@ -6,7 +6,7 @@
 #include "scheduler.h"
 
 #include "test/test_bitcoin.h"
-
+#include <boost/chrono.hpp> 
 #define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include <boost/bind.hpp>
 #include <boost/random/mersenne_twister.hpp>
@@ -34,7 +34,7 @@ static void MicroSleep(uint64_t n)
 #if defined(HAVE_WORKING_BOOST_SLEEP_FOR)
     boost::this_thread::sleep_for(boost::chrono::microseconds(n));
 #elif defined(HAVE_WORKING_BOOST_SLEEP)
-    boost::this_thread::sleep(boost::posix_time::microseconds(n));
+    boost::this_thread::sleep_for(boost::chrono::microseconds(n));
 #else
     //should never get here
     #error missing boost sleep implementation
