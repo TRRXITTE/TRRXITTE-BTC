@@ -5,15 +5,11 @@
 
 #include "chainparams.h"
 #include "consensus/merkle.h"
-
 #include "tinyformat.h"
 #include "util.h"
 #include "utilstrencodings.h"
-
 #include <assert.h>
-
 #include <boost/assign/list_of.hpp>
-
 #include "chainparamsseeds.h"
 
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
@@ -276,9 +272,13 @@ public:
         consensus.vDeployments[d].nTimeout = nTimeout;
     }
 };
+
+// Static instances of the chain parameters
+static CMainParams mainParams;
+static CTestNetParams testNetParams;
 static CRegTestParams regTestParams;
 
-static CChainParams *pCurrentParams = 0;
+static CChainParams *pCurrentParams = nullptr;
 
 const CChainParams &Params() {
     assert(pCurrentParams);
@@ -288,11 +288,11 @@ const CChainParams &Params() {
 CChainParams& Params(const std::string& chain)
 {
     if (chain == CBaseChainParams::MAIN)
-            return mainParams;
+        return mainParams;
     else if (chain == CBaseChainParams::TESTNET)
-            return testNetParams;
+        return testNetParams;
     else if (chain == CBaseChainParams::REGTEST)
-            return regTestParams;
+        return regTestParams;
     else
         throw std::runtime_error(strprintf("%s: Unknown chain %s.", __func__, chain));
 }

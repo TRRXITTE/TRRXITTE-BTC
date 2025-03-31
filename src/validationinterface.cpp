@@ -4,7 +4,9 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "validationinterface.h"
-
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
+#include <boost/bind.hpp> 
+using namespace boost::placeholders; 
 static CMainSignals g_signals;
 
 CMainSignals& GetMainSignals()
