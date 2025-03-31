@@ -17,7 +17,6 @@ enum DeploymentPos
     DEPLOYMENT_TESTDUMMY,
     DEPLOYMENT_CSV, // Deployment of BIP68, BIP112, and BIP113.
     DEPLOYMENT_SEGWIT, // Deployment of BIP141, BIP143, and BIP147.
-    // NOTE: Also add new deployments to VersionBitsDeploymentInfo in versionbits.cpp
     MAX_VERSION_BITS_DEPLOYMENTS
 };
 
@@ -47,7 +46,7 @@ struct Params {
     int BIP34Height;
     uint256 BIP34Hash;
     /**
-     * Minimum blocks including miner confirmation of the total of 2016 blocks in a retargetting period,
+     * Minimum blocks including miner confirmation of the total of 2016 blocks in a retargeting period,
      * (nPowTargetTimespan / nPowTargetSpacing) which is also used for BIP9 deployments.
      * Examples: 1916 for 95%, 1512 for testchains.
      */
@@ -58,12 +57,15 @@ struct Params {
     uint256 powLimit;
     bool fPowAllowMinDifficultyBlocks;
     bool fPowNoRetargeting;
-    int64_t nPowTargetSpacing;
-    int64_t nPowTargetTimespan;
+    int64_t nPowTargetSpacing;        // Initial block time (e.g., 10 seconds)
+    int64_t nPowTargetTimespan;       // Difficulty adjustment period
+    int nSwitchHeight;               // Height to switch block time (e.g., 10,000)
+    int64_t nNewPowTargetSpacing;    // New block time after switch (e.g., 140 seconds)
     int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
     uint256 nMinimumChainWork;
-    uint256 pownewlimit;
+    uint256 pownewlimit;             // Your custom pow limit
 };
+
 } // namespace Consensus
 
 #endif // BITCOIN_CONSENSUS_PARAMS_H

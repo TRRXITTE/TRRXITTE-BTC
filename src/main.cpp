@@ -1718,20 +1718,47 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
                 pindex->ToString(), pindex->GetBlockPos().ToString());
     return true;
 }
+int64_t GetBlockReward(int nHeight) {
+    int64_t nSubsidy = 50 * COIN;  // 50 BTC in satoshis (COIN = 100,000,000)
 
-CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
-{
-    int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
-        return 0;
+    // Phase 1: Aggressive halving (0-5 years)
+    if (nHeight <= 10000) {
+        return nSubsidy;  // 50 BTC
+    } else if (nHeight <= 573142) {
+        return nSubsidy;  // 50 BTC
+    } else if (nHeight <= 1126284) {
+        return nSubsidy / 2;  // 25 BTC
+    }
 
-    CAmount nSubsidy = 50 * COIN;
-    // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
-    nSubsidy >>= halvings;
-    return nSubsidy;
+    // Phase 2: Moderate linear reduction (5-15 years)
+    else if (nHeight <= 1689426) {
+        return 20 * COIN;  // 20 BTC
+    } else if (nHeight <= 2252568) {
+        return 15 * COIN;  // 15 BTC
+    } else if (nHeight <= 2815710) {
+        return 10 * COIN;  // 10 BTC
+    } else if (nHeight <= 3952569) {
+        return 5 * COIN;   // 5 BTC
+    }
+
+    // Phase 3: Gradual linear reduction (15-25 years)
+    else if (nHeight <= 4515711) {
+        return 4 * COIN;  // 4 BTC
+    } else if (nHeight <= 5078853) {
+        return 3 * COIN;  // 3 BTC
+    } else if (nHeight <= 5641995) {
+        return 2 * COIN;  // 2 BTC
+    } else if (nHeight <= 6778854) {
+        return 1 * COIN;  // 1 BTC
+    }
+
+    return 0;  // After ~25 years
 }
 
+/** Get the block subsidy (reward) using the custom piecewise schedule */
+CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams) {
+    return GetBlockReward(nHeight);
+}
 bool IsInitialBlockDownload()
 {
     const CChainParams& chainParams = Params();

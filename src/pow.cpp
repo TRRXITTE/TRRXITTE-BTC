@@ -13,27 +13,22 @@
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
-    unsigned int nProofOfWorkMin = UintToArith256(params.pownewlimit).GetCompact();
 
     // Genesis block
-    if (pindexLast == NULL)
+    if (pindexLast == nullptr)
         return nProofOfWorkLimit;
 
-    if (pindexLast->nHeight >= 112266 && pindexLast->nHeight <= 112300)
-        return nProofOfWorkLimit;
-
-    if (pindexLast->nHeight >= 112301 && pindexLast->nHeight <= 112401)
-        return nProofOfWorkMin;
+    // Determine target spacing based on block height
+    int64_t nPowTargetSpacing = (pindexLast->nHeight < params.nSwitchHeight) ? params.nPowTargetSpacing : params.nNewPowTargetSpacing;
 
     // Only change once per difficulty adjustment interval
-    if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
+    if ((pindexLast->nHeight + 1) % params.DifficultyAdjustmentInterval() != 0)
     {
         if (params.fPowAllowMinDifficultyBlocks)
         {
-            // Special difficulty rule for testnet:
-            // If the new block's timestamp is more than 2* 10 minutes
-            // then allow mining of a min-difficulty block.
-            if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing*2)
+            // Special difficulty rule for testnet/regtest:
+            // If the new block's timestamp is more than 2x the target spacing, allow min-difficulty block
+            if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + nPowTargetSpacing * 2)
                 return nProofOfWorkLimit;
             else
             {
@@ -47,8 +42,8 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
         return pindexLast->nBits;
     }
 
-    // Go back by what we want to be 14 days worth of blocks
-    int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval()-1);
+    // Go back by the adjustment interval (e.g., 2016 blocks)
+    int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval() - 1);
     assert(nHeightFirst >= 0);
     const CBlockIndex* pindexFirst = pindexLast->GetAncestor(nHeightFirst);
     assert(pindexFirst);
@@ -61,19 +56,23 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
 
+    // Use dynamic target spacing based on current height
+    int64_t nPowTargetSpacing = (pindexLast->nHeight < params.nSwitchHeight) ? params.nPowTargetSpacing : params.nNewPowTargetSpacing;
+    int64_t nPowTargetTimespan = nPowTargetSpacing * params.DifficultyAdjustmentInterval();
+
     // Limit adjustment step
     int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
-    if (nActualTimespan < params.nPowTargetTimespan/4)
-        nActualTimespan = params.nPowTargetTimespan/4;
-    if (nActualTimespan > params.nPowTargetTimespan*4)
-        nActualTimespan = params.nPowTargetTimespan*4;
+    if (nActualTimespan < nPowTargetTimespan / 4)
+        nActualTimespan = nPowTargetTimespan / 4;
+    if (nActualTimespan > nPowTargetTimespan * 4)
+        nActualTimespan = nPowTargetTimespan * 4;
 
     // Retarget
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
     arith_uint256 bnNew;
     bnNew.SetCompact(pindexLast->nBits);
     bnNew *= nActualTimespan;
-    bnNew /= params.nPowTargetTimespan;
+    bnNew /= nPowTargetTimespan;
 
     if (bnNew > bnPowLimit)
         bnNew = bnPowLimit;
