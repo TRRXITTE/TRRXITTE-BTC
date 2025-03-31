@@ -40,7 +40,7 @@ QString BitcoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case TRRXITTE: return QString("XBT");
+    case TRRXITTE: return QString("TRRXITTE");
     case mTRRXITTE: return QString("mXBT");
     case uTRRXITTE: return QString::fromUtf8("μXBT");
     default: return QString("???");
