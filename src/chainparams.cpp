@@ -35,34 +35,35 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
+    const char* pszTimestamp = "TRRXITTE BTC - 31/Mar/2025"; // Updated timestamp
     const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
 /**
- * Main network
+ * Main network (TRRXITTE BTC)
  */
 class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = "main";
-        consensus.nSubsidyHalvingInterval = 210000; // Placeholder, overridden by GetBlockReward
+        consensus.nSubsidyHalvingInterval = 210000; // Halving every 210,000 blocks (adjust as needed)
         consensus.nMajorityEnforceBlockUpgrade = 750;
         consensus.nMajorityRejectBlockOutdated = 950;
         consensus.nMajorityWindow = 1000;
-        consensus.BIP34Height = 0x210c;
-        consensus.BIP34Hash = uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f");
-        consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 6 * 60 * 60; // 6 hours for difficulty adjustment
-        consensus.nPowTargetSpacing = 10;           // 10 seconds initially
-        consensus.nSwitchHeight = 10000;           // Switch at block 10,000
-        consensus.nNewPowTargetSpacing = 140;      // 140 seconds after switch
+        consensus.BIP34Height = 0; // Enforce BIP34 from genesis
+        consensus.BIP34Hash = uint256S("0x0000000000000000000000000000000000000000000000000000000000000000"); // Placeholder, updated below
+        consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // Easier initial difficulty
+        consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // 2 weeks for difficulty adjustment
+        consensus.nPowTargetSpacing = 10 * 60; // 10 minutes block time
+        consensus.nSwitchHeight = 10000; // Optional: adjust if using dynamic spacing
+        consensus.nNewPowTargetSpacing = 140; // Optional: adjust if using dynamic spacing
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
-        consensus.nMinerConfirmationWindow = 2016; // Adjusted dynamically in pow.cpp
+        consensus.nMinerConfirmationWindow = 2016;
 
+        // BIP9 deployments (optional, adjust or remove)
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
@@ -72,33 +73,38 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1769568253; // January 28, 2026
 
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1479168000; // November 15th, 2016
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1510704000; // November 15th, 2017
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1746057600; // March 31, 2025
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1777593600; // March 31, 2026
 
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000004fd9e9fc4ede0e39de5");
-        consensus.pownewlimit = uint256S("0000000000000023CA7500000000000000000000000000000000000000000000");
+        consensus.nMinimumChainWork = uint256S("0x00"); // Reset for new chain
+        consensus.pownewlimit = uint256S("0000000000000023CA7500000000000000000000000000000000000000000000"); // Adjust if needed
 
-        pchMessageStart[0] = 0xa7;
-        pchMessageStart[1] = 0x3c;
-        pchMessageStart[2] = 0xe9;
-        pchMessageStart[3] = 0x5b;
-        nDefaultPort = 55553;
-        nPruneAfterHeight = 100000;
+        // Unique network magic bytes
+        pchMessageStart[0] = 0xf1;
+        pchMessageStart[1] = 0xa2;
+        pchMessageStart[2] = 0xb3;
+        pchMessageStart[3] = 0xc4;
+        nDefaultPort = 9333; // New P2P port
+        nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
+        // New genesis block
+        genesis = CreateGenesisBlock(1746057600, 980180, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
-        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        // Placeholder: Update these with the actual hash and merkle root after generating (see Step 2)
+        assert(consensus.hashGenesisBlock == uint256S("0x00000a9b43e3b18fc0a5666bde13c13a1a443ca544fff0351e137cd6dca2c5e1"));
+        assert(genesis.hashMerkleRoot == uint256S("0xcf93f0bc41c2240d38e89d8d0650e6e338b59e847022ca8761a905f0ea1b3bbf"));
 
-        vSeeds.push_back(CDNSSeedData("btc-seed-one.trrxitte.com", "btc-seed-two.trrxitte.com"));
+        // Seed nodes (update with your own if desired)
+        vSeeds.push_back(CDNSSeedData("seed-one.btc.trrxitte.com", "seed-two.btc.trrxitte.com"));
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
-        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1,128);
+        // Address prefixes (unique from Bitcoin)
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 48); // 'M'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 50); // 'N'
+        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 176); // 'X'
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
 
-        vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
+        vFixedSeeds.clear(); // No fixed seeds initially
 
         fMiningRequiresPeers = true;
         fDefaultConsistencyChecks = false;
@@ -108,26 +114,22 @@ public:
 
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
-            ( 0, uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"))
-            ( 11111, uint256S("0x0000000069e244f73d78e8fd29ba2fd2ed618bd6fa2ee92559f542fdb26e7c1d"))
-            ( 33333, uint256S("0x000000002dd5588a74784eaa7ab0507a18ad16a236e7b1ce69f00d7ddfb5d0a6"))
-            ( 74000, uint256S("0x0000000000573993a3c9e41ce34471c079dcf5f52a0e824a81e7f953b8661a20"))
-            ( 97000, uint256S("0x00000000000125d656e9f28543317f33fb1b66baaf90de44a375ce6c5564fe0c"))
-            ( 110000, uint256S("0x0000000000000004c6282de33556f2e8658f5c70c9c845f95f8ff8ebd6005184"))
-            ( 112273, uint256S("0x00000000b729f5512fcb0aabf09531d585b5f261af00e3a871f139346933349a")),
-            0, 0, 0
+            (0, uint256S("0x00000d5e1f2a3b4c5d6e7f8091a2b3c4d5e6f70891a2b3c4d5e6f70891a2b3c4")), // Update with real genesis hash
+            1746057600, // Genesis timestamp
+            0,
+            0
         };
     }
 };
 
 /**
- * Testnet (v3)
+ * Testnet (v3) - Keeping Bitcoin’s testnet for now
  */
 class CTestNetParams : public CChainParams {
 public:
     CTestNetParams() {
         strNetworkID = "test";
-        consensus.nSubsidyHalvingInterval = 210000; // Placeholder, overridden by GetBlockReward
+        consensus.nSubsidyHalvingInterval = 210000;
         consensus.nMajorityEnforceBlockUpgrade = 51;
         consensus.nMajorityRejectBlockOutdated = 75;
         consensus.nMajorityWindow = 100;
@@ -135,9 +137,9 @@ public:
         consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8");
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // Two weeks
-        consensus.nPowTargetSpacing = 10;           // 10 seconds initially
-        consensus.nSwitchHeight = 10000;           // Switch at block 10,000
-        consensus.nNewPowTargetSpacing = 140;      // 140 seconds after switch
+        consensus.nPowTargetSpacing = 10;
+        consensus.nSwitchHeight = 10000;
+        consensus.nNewPowTargetSpacing = 140;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
@@ -203,7 +205,7 @@ class CRegTestParams : public CChainParams {
 public:
     CRegTestParams() {
         strNetworkID = "regtest";
-        consensus.nSubsidyHalvingInterval = 150; // Placeholder, overridden by GetBlockReward
+        consensus.nSubsidyHalvingInterval = 150;
         consensus.nMajorityEnforceBlockUpgrade = 750;
         consensus.nMajorityRejectBlockOutdated = 950;
         consensus.nMajorityWindow = 1000;
@@ -211,9 +213,9 @@ public:
         consensus.BIP34Hash = uint256();
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // Two weeks
-        consensus.nPowTargetSpacing = 10;           // 10 seconds initially
-        consensus.nSwitchHeight = 10000;           // Switch at block 10,000
-        consensus.nNewPowTargetSpacing = 140;      // 140 seconds after switch
+        consensus.nPowTargetSpacing = 10;
+        consensus.nSwitchHeight = 10000;
+        consensus.nNewPowTargetSpacing = 140;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 108;
@@ -277,8 +279,6 @@ public:
 static CMainParams mainParams;
 static CTestNetParams testNetParams;
 static CRegTestParams regTestParams;
-
-static CChainParams *pCurrentParams = nullptr;
 
 const CChainParams &Params() {
     assert(pCurrentParams);
