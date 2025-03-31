@@ -155,7 +155,7 @@ def create_tx(bitcoind, fromaddresses, toaddress, amount, fee):
         total_available += all_coins[addr]["total"]
 
     if total_available < needed:
-        sys.stderr.write("Error, only %f BTC available, need %f\n"%(total_available, needed));
+        sys.stderr.write("Error, only %f TRRXITTE available, need %f\n"%(total_available, needed));
         sys.exit(1)
 
     #

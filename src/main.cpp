@@ -1556,7 +1556,7 @@ bool AcceptToMemoryPoolWorker(CTxMemPool& pool, CValidationState& state, const C
         // Remove conflicting transactions from the mempool
         BOOST_FOREACH(const CTxMemPool::txiter it, allConflicting)
         {
-            LogPrint("mempool", "replacing tx %s with %s for %s BTC additional fees, %d delta bytes\n",
+            LogPrint("mempool", "replacing tx %s with %s for %s TRRXITTE additional fees, %d delta bytes\n",
                     it->GetTx().GetHash().ToString(),
                     hash.ToString(),
                     FormatMoney(nModifiedFees - nConflictingFees),
@@ -1720,37 +1720,37 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
     return true;
 }
 int64_t GetBlockReward(int nHeight) {
-    int64_t nSubsidy = 50 * COIN;  // 50 BTC in satoshis (COIN = 100,000,000)
+    int64_t nSubsidy = 50 * COIN;  // 50 TRRXITTE in satoshis (COIN = 100,000,000)
 
     // Phase 1: Aggressive halving (0-5 years)
     if (nHeight <= 10000) {
-        return nSubsidy;  // 50 BTC
+        return nSubsidy;  // 50 TRRXITTE
     } else if (nHeight <= 573142) {
-        return nSubsidy;  // 50 BTC
+        return nSubsidy;  // 50 TRRXITTE
     } else if (nHeight <= 1126284) {
-        return nSubsidy / 2;  // 25 BTC
+        return nSubsidy / 2;  // 25 TRRXITTE
     }
 
     // Phase 2: Moderate linear reduction (5-15 years)
     else if (nHeight <= 1689426) {
-        return 20 * COIN;  // 20 BTC
+        return 20 * COIN;  // 20 TRRXITTE
     } else if (nHeight <= 2252568) {
-        return 15 * COIN;  // 15 BTC
+        return 15 * COIN;  // 15 TRRXITTE
     } else if (nHeight <= 2815710) {
-        return 10 * COIN;  // 10 BTC
+        return 10 * COIN;  // 10 TRRXITTE
     } else if (nHeight <= 3952569) {
-        return 5 * COIN;   // 5 BTC
+        return 5 * COIN;   // 5 TRRXITTE
     }
 
     // Phase 3: Gradual linear reduction (15-25 years)
     else if (nHeight <= 4515711) {
-        return 4 * COIN;  // 4 BTC
+        return 4 * COIN;  // 4 TRRXITTE
     } else if (nHeight <= 5078853) {
-        return 3 * COIN;  // 3 BTC
+        return 3 * COIN;  // 3 TRRXITTE
     } else if (nHeight <= 5641995) {
-        return 2 * COIN;  // 2 BTC
+        return 2 * COIN;  // 2 TRRXITTE
     } else if (nHeight <= 6778854) {
-        return 1 * COIN;  // 1 BTC
+        return 1 * COIN;  // 1 TRRXITTE
     }
 
     return 0;  // After ~25 years
