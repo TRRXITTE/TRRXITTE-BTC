@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
+#include <boost/filesystem.hpp>
 #include "wallet/wallet.h"
 #include <filesystem>
 #include <random>
@@ -415,7 +415,7 @@ void CWallet::Flush(bool shutdown)
 bool CWallet::Verify()
 {
     LogPrintf("Using BerkeleyDB version %s\n", DbEnv::version(0, 0, 0));
-    std::filesystem::path walletFile GetArg("-wallet", DEFAULT_WALLET_DAT);
+    boost::filesystem::path walletFile = GetArg("-wallet", DEFAULT_WALLET_DAT);
 
     LogPrintf("Using wallet %s\n", walletFile);
     uiInterface.InitMessage(_("Verifying wallet..."));
@@ -446,13 +446,13 @@ bool CWallet::Verify()
     if (GetBoolArg("-salvagewallet", false))
     {
         // Recover readable keypairs:
-        if (!CWalletDB::Recover(bitdb, walletFile, true))
+        if (!CWalletDB::Recover(bitdb, walletFile.string(), true))
             return false;
     }
     
     if (boost::filesystem::exists(GetDataDir() / walletFile))
     {
-        CDBEnv::VerifyResult r = bitdb.Verify(walletFile, CWalletDB::Recover);
+        CDBEnv::VerifyResult r = bitdb.Verify(walletFile.string(), CWalletDB::Recover);
         if (r == CDBEnv::RECOVER_OK)
         {
             InitWarning(strprintf(_("Warning: Wallet file corrupt, data salvaged!"
@@ -3297,7 +3297,7 @@ std::string CWallet::GetWalletHelpString(bool showDebug)
 
 bool CWallet::InitLoadWallet()
 {
-    std::filesystem::path walletFile GetArg("-wallet", DEFAULT_WALLET_DAT);
+    boost::filesystem::path walletFile = GetArg("-wallet", DEFAULT_WALLET_DAT);
 
     // needed to restore wallet transaction meta data after -zapwallettxes
     std::vector<CWalletTx> vWtx;
@@ -3305,7 +3305,7 @@ bool CWallet::InitLoadWallet()
     if (GetBoolArg("-zapwallettxes", false)) {
         uiInterface.InitMessage(_("Zapping all transactions from wallet..."));
 
-        CWallet *tempWallet = new CWallet(walletFile);
+        CWallet *tempWallet = new CWallet(walletFile.string());
         DBErrors nZapWalletRet = tempWallet->ZapWalletTx(vWtx);
         if (nZapWalletRet != DB_LOAD_OK) {
             return InitError(strprintf(_("Error loading %s: Wallet corrupted"), walletFile));
@@ -3319,7 +3319,7 @@ bool CWallet::InitLoadWallet()
 
     int64_t nStart = GetTimeMillis();
     bool fFirstRun = true;
-    CWallet *walletInstance = new CWallet(walletFile);
+    CWallet *walletInstance = new CWallet(walletFile.string());
     DBErrors nLoadWalletRet = walletInstance->LoadWallet(fFirstRun);
     if (nLoadWalletRet != DB_LOAD_OK)
     {
@@ -3395,7 +3395,7 @@ bool CWallet::InitLoadWallet()
         pindexRescan = chainActive.Genesis();
     else
     {
-        CWalletDB walletdb(walletFile);
+        CWalletDB walletdb(walletFile.string());
         CBlockLocator locator;
         if (walletdb.ReadBestBlock(locator))
             pindexRescan = FindForkInGlobalIndex(chainActive, locator);
@@ -3428,7 +3428,7 @@ bool CWallet::InitLoadWallet()
         // Restore wallet transaction metadata after -zapwallettxes=1
         if (GetBoolArg("-zapwallettxes", false) && GetArg("-zapwallettxes", "1") != "2")
         {
-            CWalletDB walletdb(walletFile);
+            CWalletDB walletdb(walletFile.string());
 
             BOOST_FOREACH(const CWalletTx& wtxOld, vWtx)
             {
