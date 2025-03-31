@@ -946,7 +946,7 @@
         <translation>Quantia</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. %1)</source>
+        <source>Enter a TRRXITTE address (e.g. %1)</source>
         <translation>Entre um endereço Bitcoin (ex. %1)</translation>
     </message>
     <message>

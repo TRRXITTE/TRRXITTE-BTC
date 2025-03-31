@@ -1029,8 +1029,8 @@
         <translation>Amount</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. %1)</source>
-        <translation>Enter a Bitcoin address (e.g. %1)</translation>
+        <source>Enter a TRRXITTE address (e.g. %1)</source>
+        <translation>Enter a TRRXITTE address (e.g. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>

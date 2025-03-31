@@ -41,8 +41,8 @@ QString BitcoinUnits::name(int unit)
     switch(unit)
     {
     case TRRXITTE: return QString("TRRXITTE");
-    case mTRRXITTE: return QString("mXBT");
-    case uTRRXITTE: return QString::fromUtf8("μXBT");
+    case mTRRXITTE: return QString("mTRRXITTE");
+    case uTRRXITTE: return QString::fromUtf8("μTRRXITTE");
     default: return QString("???");
     }
 }
@@ -51,9 +51,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case TRRXITTE: return QString("Bitcoins");
-    case mTRRXITTE: return QString("Milli-Bitcoins (1 / 1" THIN_SP_UTF8 "000)");
-    case uTRRXITTE: return QString("Micro-Bitcoins (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case TRRXITTE: return QString("TRRXITTE");
+    case mTRRXITTE: return QString("Milli-TRRXITTE (1 / 1" THIN_SP_UTF8 "000)");
+    case uTRRXITTE: return QString("Micro-TRRXITTE (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }
