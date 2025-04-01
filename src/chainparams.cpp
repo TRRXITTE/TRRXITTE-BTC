@@ -88,9 +88,9 @@ public:
         nPruneAfterHeight = 1000;
 
         // New genesis block
-        genesis = CreateGenesisBlock(1746057600, 123723, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
+        genesis = CreateGenesisBlock(1743436800, 5897362, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000d8810c36c9a0a5ab63a3b824c99f6cb1864e082578691fcc31f16522166"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000083ecfc7088980ca7bf798d2e8bfd51823f809a9d3db946f82d046a94b8c"));
         assert(genesis.hashMerkleRoot == uint256S("0x8bae0c69ee37acb691c9a7dcb25496858b5a8c08dea826b4e4f83888f5f2f827"));
 
         // Seed nodes (update with your own if desired)
