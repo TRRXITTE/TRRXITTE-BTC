@@ -34076,14 +34076,14 @@ printf "%s\n" "#define CLIENT_VERSION_IS_RELEASE true" >>confdefs.h
 printf "%s\n" "#define COPYRIGHT_YEAR 2025" >>confdefs.h
 
 
-printf "%s\n" "#define COPYRIGHT_HOLDERS \"The %s developers\"" >>confdefs.h
+printf "%s\n" "#define COPYRIGHT_HOLDERS \"%s\"" >>confdefs.h
 
 
 printf "%s\n" "#define COPYRIGHT_HOLDERS_SUBSTITUTION \"TRRXITTE Int., incorporate\"" >>confdefs.h
 
 
 
-printf "%s\n" "#define COPYRIGHT_HOLDERS_FINAL \"The TRRXITTE Int., incorporate developers\"" >>confdefs.h
+printf "%s\n" "#define COPYRIGHT_HOLDERS_FINAL \"TRRXITTE Int., incorporate\"" >>confdefs.h
 
 CLIENT_VERSION_MAJOR=0
 
@@ -34097,7 +34097,7 @@ CLIENT_VERSION_IS_RELEASE=true
 
 COPYRIGHT_YEAR=2025
 
-COPYRIGHT_HOLDERS="The %s developers"
+COPYRIGHT_HOLDERS="%s"
 
 COPYRIGHT_HOLDERS_SUBSTITUTION="TRRXITTE Int., incorporate"
 
