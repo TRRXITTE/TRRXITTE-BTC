@@ -1721,10 +1721,10 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 }
 int64_t GetBlockReward(int nHeight) {
     int64_t nSubsidy = 50 * COIN;  // 50 TRRXITTE in satoshis (COIN = 100,000,000)
+}
 
 // Assuming COIN = 1 TRRXITTE
-CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
-{
+CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams) {
     CAmount nSubsidy = 50 * COIN;
     
     // Phase 1: Aggressive halving (0-5 years)
@@ -1754,35 +1754,35 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
         return 3 * COIN;  // 3 TRRXITTE
     } else if (nHeight <= 5641995) {
         return 2 * COIN;  // 2 TRRXITTE
-    } else if (nHeight <= 6778853) {  // Note: Changed from 6778854 to 6778853
+    } else if (nHeight <= 6778853) {
         return 1 * COIN;  // 1 TRRXITTE
     }
 
     // New Phase 4: Fixed 2.5 TRRXITTE until 80M supply
-    else if (nHeight >= 6778854) {
+    else {
         // Calculate total supply up to block 6778853
         CAmount totalSupply = 
-            (573142 * 50 * COIN) +              // First phase
-            ((1126284 - 573142) * 25 * COIN) +  // Second phase
-            ((1689426 - 1126284) * 20 * COIN) + // Third phase
-            ((2252568 - 1689426) * 15 * COIN) +
-            ((2815710 - 2252568) * 10 * COIN) +
-            ((3952569 - 2815710) * 5 * COIN) +
-            ((4515711 - 3952569) * 4 * COIN) +
-            ((5078853 - 4515711) * 3 * COIN) +
-            ((5641995 - 5078853) * 2 * COIN) +
-            ((6778853 - 5641995) * 1 * COIN);
+            (573142LL * 50 * COIN) +              // First phase
+            ((1126284LL - 573142) * 25 * COIN) +  // Second phase
+            ((1689426LL - 1126284) * 20 * COIN) + // Third phase
+            ((2252568LL - 1689426) * 15 * COIN) +
+            ((2815710LL - 2252568) * 10 * COIN) +
+            ((3952569LL - 2815710) * 5 * COIN) +
+            ((4515711LL - 3952569) * 4 * COIN) +
+            ((5078853LL - 4515711) * 3 * COIN) +
+            ((5641995LL - 5078853) * 2 * COIN) +
+            ((6778853LL - 5641995) * 1 * COIN);
 
         // Target supply is 80 million TRRXITTE
-        CAmount targetSupply = 80000000 * COIN;
+        CAmount targetSupply = 80000000LL * COIN;
         CAmount remainingSupply = targetSupply - totalSupply;
         
         // Calculate how many blocks at 2.5 TRRXITTE until target
-        int64_t blocksRemaining = remainingSupply / (2.5 * COIN);
+        int64_t blocksRemaining = remainingSupply / (CAmount)(2.5 * COIN);
         int64_t cutoffHeight = 6778854 + blocksRemaining;
 
         if (nHeight < cutoffHeight) {
-            return 2.5 * COIN;  // 2.5 TRRXITTE
+            return static_cast<CAmount>(2.5 * COIN);  // 2.5 TRRXITTE
         }
     }
 
