@@ -1719,11 +1719,6 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
                 pindex->ToString(), pindex->GetBlockPos().ToString());
     return true;
 }
-int64_t GetBlockReward(int nHeight) {
-    int64_t nSubsidy = 50 * COIN;  // 50 TRRXITTE in satoshis (COIN = 100,000,000)
-}
-
-// Assuming COIN = 1 TRRXITTE
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams) {
     CAmount nSubsidy = 50 * COIN;
     
@@ -1758,7 +1753,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams) {
         return 1 * COIN;  // 1 TRRXITTE
     }
 
-    // New Phase 4: Fixed 2.5 TRRXITTE until 80M supply
+    // Phase 4: Fixed 2.5 TRRXITTE until 80M supply
     else {
         // Calculate total supply up to block 6778853
         CAmount totalSupply = 
@@ -1777,22 +1772,18 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams) {
         CAmount targetSupply = 80000000LL * COIN;
         CAmount remainingSupply = targetSupply - totalSupply;
         
-        // Calculate how many blocks at 2.5 TRRXITTE until target
-        int64_t blocksRemaining = remainingSupply / (CAmount)(2.5 * COIN);
+        // Calculate remaining blocks at 2.5 TRRXITTE per block
+        int64_t blocksRemaining = (remainingSupply + (5 * COIN / 2) - 1) / (5 * COIN / 2);
         int64_t cutoffHeight = 6778854 + blocksRemaining;
 
         if (nHeight < cutoffHeight) {
-            return static_cast<CAmount>(2.5 * COIN);  // 2.5 TRRXITTE
+            return (5 * COIN) / 2;  // 2.5 TRRXITTE using integer math
         }
     }
 
     return 0;  // After supply cap reached
 }
 
-/** Get the block subsidy (reward) using the custom piecewise schedule */
-CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams) {
-    return GetBlockReward(nHeight);
-}
 bool IsInitialBlockDownload()
 {
     const CChainParams& chainParams = Params();
