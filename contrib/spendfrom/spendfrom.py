@@ -38,7 +38,7 @@ def check_json_precision():
 def determine_db_dir():
     """Return the default location of the bitcoin data directory"""
     if platform.system() == "Darwin":
-        return os.path.expanduser("~/Library/Application Support/TRRXITTE/")
+        return os.path.expanduser("~/Library/Application Support/Bitcoin/")
     elif platform.system() == "Windows":
         return os.path.join(os.environ['APPDATA'], "Bitcoin")
     return os.path.expanduser("~/.bitcoin")
@@ -155,7 +155,7 @@ def create_tx(bitcoind, fromaddresses, toaddress, amount, fee):
         total_available += all_coins[addr]["total"]
 
     if total_available < needed:
-        sys.stderr.write("Error, only %f TRRXITTE available, need %f\n"%(total_available, needed));
+        sys.stderr.write("Error, only %f BTC available, need %f\n"%(total_available, needed));
         sys.exit(1)
 
     #

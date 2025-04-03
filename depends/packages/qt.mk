@@ -116,17 +116,18 @@ $(package)_config_opts += -no-feature-undoview
 $(package)_config_opts += -no-feature-vnc
 $(package)_config_opts += -no-feature-xml
 
-$(package)_config_opts_darwin = -no-dbus
-$(package)_config_opts_darwin += -no-opengl
-
-ifneq ($(build_os),darwin)
-$(package)_config_opts_darwin += -xplatform macx-clang-linux
-$(package)_config_opts_darwin += -device-option MAC_SDK_PATH=$(OSX_SDK)
-$(package)_config_opts_darwin += -device-option MAC_SDK_VERSION=$(OSX_SDK_VERSION)
-$(package)_config_opts_darwin += -device-option CROSS_COMPILE="$(host)-"
-$(package)_config_opts_darwin += -device-option MAC_MIN_VERSION=$(OSX_MIN_VERSION)
-$(package)_config_opts_darwin += -device-option MAC_TARGET=$(host)
-endif
+  # Updated macOS-specific options
+  $(package)_config_opts_darwin = -no-dbus
+  $(package)_config_opts_darwin += -no-opengl
+  $(package)_config_opts_darwin += -platform macx-clang
+  ifneq ($(build_os),darwin)
+    $(package)_config_opts_darwin += -xplatform macx-clang-linux
+    $(package)_config_opts_darwin += -device-option MAC_SDK_PATH=$(OSX_SDK)
+    $(package)_config_opts_darwin += -device-option MAC_SDK_VERSION=$(OSX_SDK_VERSION)
+    $(package)_config_opts_darwin += -device-option CROSS_COMPILE="$(host)-"
+    $(package)_config_opts_darwin += -device-option MAC_MIN_VERSION=$(OSX_MIN_VERSION)
+    $(package)_config_opts_darwin += -device-option MAC_TARGET=$(host)
+  endif
 
 $(package)_config_opts_linux  = -qt-xkbcommon-x11
 $(package)_config_opts_linux += -qt-xcb
@@ -161,7 +162,7 @@ $(package)_config_opts_android += -no-eglfs
 $(package)_config_opts_android += -no-dbus
 $(package)_config_opts_android += -opengl es2
 $(package)_config_opts_android += -qt-freetype
-$(package)_config_opts_android += -no-fontconfig
+$(package)_config_optsANDROID += -no-fontconfig
 $(package)_config_opts_android += -L $(host_prefix)/lib
 $(package)_config_opts_android += -I $(host_prefix)/include
 
@@ -170,8 +171,10 @@ $(package)_config_opts_armv7a_android += -android-arch armeabi-v7a
 $(package)_config_opts_x86_64_android += -android-arch x86_64
 $(package)_config_opts_i686_android += -android-arch i686
 
-$(package)_build_env  = QT_RCC_TEST=1
-$(package)_build_env += QT_RCC_SOURCE_DATE_OVERRIDE=1
+  # Updated build environment with corrected LDFLAGS
+  $(package)_build_env  = QT_RCC_TEST=1
+  $(package)_build_env += QT_RCC_SOURCE_DATE_OVERRIDE=1
+  $(package)_build_env += LDFLAGS="-F$(OSX_SDK)/System/Library/Frameworks -framework CoreFoundation -framework ApplicationServices"
 endef
 
 define $(package)_fetch_cmds
@@ -239,7 +242,8 @@ define $(package)_preprocess_cmds
   sed -i.old "0,/^QMAKE_LFLAGS_/s|^QMAKE_LFLAGS_|!host_build: QMAKE_LFLAGS            = $($(package)_ldflags)\n&|" qtbase/mkspecs/win32-g++/qmake.conf && \
   sed -i.old "s|QMAKE_CC                = clang|QMAKE_CC                = $($(package)_cc)|" qtbase/mkspecs/common/clang.conf && \
   sed -i.old "s|QMAKE_CXX               = clang++|QMAKE_CXX               = $($(package)_cxx)|" qtbase/mkspecs/common/clang.conf && \
-  sed -i.old "s/LIBRARY_PATH/(CROSS_)?\0/g" qtbase/mkspecs/features/toolchain.prf
+  sed -i.old "s/LIBRARY_PATH/(CROSS_)?\0/g" qtbase/mkspecs/features/toolchain.prf && \
+  chmod +x configure
 endef
 
 define $(package)_config_cmds
