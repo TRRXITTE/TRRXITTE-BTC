@@ -32,11 +32,20 @@ To build executables for Windows 32-bit:
 
 To build executables for Windows 64-bit:
 
-    cd depends
-    make HOST=x86_64-w64-mingw32 -j4
-    cd ..
-    ./configure --prefix=`pwd`/depends/x86_64-w64-mingw32
-    make
+cd bitcoin
+./autogen.sh
+cd depends
+export PKG_CONFIG_PATH=~/bitcoin/depends/x86_64-w64-mingw32/lib/pkgconfig:$PKG_CONFIG_PATH
+make HOST=x86_64-w64-mingw32 -j$(nproc)
+cd ..
+  ./configure \
+  --host=x86_64-w64-mingw32 \
+  --prefix=$HOME/bitcoin/depends/x86_64-w64-mingw32 \
+  CXXFLAGS="$(echo $CXXFLAGS | sed 's/-Werror//') -Wno-placement-new -Wno-deprecated-declarations" \
+  CPPFLAGS="-I$HOME/bitcoin/depends/x86_64-w64-mingw32/include" \
+  LDFLAGS="-L$HOME/bitcoin/depends/x86_64-w64-mingw32/lib" \
+  --with-miniupnpc=no --disable-tests --disable-bench
+make -j$(nproc)
 
 For further documentation on the depends system see [README.md](../depends/README.md) in the depends directory.
 
