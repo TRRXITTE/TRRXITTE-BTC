@@ -461,7 +461,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Unix: ~/.bitcoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "TRRXITTE-BTC";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "TRRXITTE";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -471,10 +471,10 @@ boost::filesystem::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/TRRXITTE-BTC";
+    return pathRet / "Library/Application Support/TRRXITTE";
 #else
     // Unix
-    return pathRet / ".trrxitte-btc";
+    return pathRet / ".trrxitte";
 #endif
 #endif
 }

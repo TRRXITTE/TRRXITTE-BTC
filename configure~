@@ -612,12 +612,12 @@ MFLAGS=
 MAKEFLAGS=
 
 # Identity of this package.
-PACKAGE_NAME='Bitcoin Core'
-PACKAGE_TARNAME='bitcoin'
+PACKAGE_NAME='TRRXITTE Bitcoin'
+PACKAGE_TARNAME='trrxitte'
 PACKAGE_VERSION='0.13.2'
-PACKAGE_STRING='Bitcoin Core 0.13.2'
-PACKAGE_BUGREPORT='https://github.com/bitcoin/bitcoin/issues'
-PACKAGE_URL='https://bitcoincore.org/'
+PACKAGE_STRING='TRRXITTE Bitcoin 0.13.2'
+PACKAGE_BUGREPORT='https://github.com/trrxitte/bitcoin/issues'
+PACKAGE_URL='https://btc.trrxitte.com/'
 
 ac_unique_file="src/main.cpp"
 # Factoring default headers for most tests.
