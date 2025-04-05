@@ -1,0 +1,11 @@
+HTTrack3.49-2 launched on Sat, 05 Apr 2025 03:48:53 at https://xbt-explorer.s3na.xyz/
+(httrack https://xbt-explorer.s3na.xyz/ )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+
+HTTrack Website Copier/3.49-2 mirror complete in 8 minutes 49 seconds : 528 links scanned, 527 files written (7411123 bytes overall) [2591378 bytes received at 4898 bytes/sec], 7299141 bytes transferred using HTTP compression in 353 files, ratio 29%, 176.0 requests per connection
+(No errors, 0 warnings, 0 messages)

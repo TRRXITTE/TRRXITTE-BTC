@@ -1,23 +1,23 @@
 dnl require autoconf 2.60 (AS_ECHO/AS_ECHO_N)
 AC_PREREQ([2.60])
 define(_CLIENT_VERSION_MAJOR, 0)
-define(_CLIENT_VERSION_MINOR, 15)
-define(_CLIENT_VERSION_REVISION, 4)
+define(_CLIENT_VERSION_MINOR, 13)
+define(_CLIENT_VERSION_REVISION, 2)
 define(_CLIENT_VERSION_BUILD, 0)
 define(_CLIENT_VERSION_IS_RELEASE, true)
-define(_COPYRIGHT_YEAR, 2025)
-define(_COPYRIGHT_HOLDERS,[%s])
-define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[TRRXITTE Int., incorporate]])
-AC_INIT([TRRXITTE],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/trrxitte/trrxitte-btc/issues],[TRRXITTE],[https://btc.trrxitte.com/])
+define(_COPYRIGHT_YEAR, 2016)
+define(_COPYRIGHT_HOLDERS,[The %s developers])
+define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[Bitcoin Core]])
+AC_INIT([Bitcoin Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/bitcoin/bitcoin/issues],[bitcoin],[https://bitcoincore.org/])
 AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([src/config/bitcoin-config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 
-BITCOIN_DAEMON_NAME=TRRXITTEd
-BITCOIN_GUI_NAME=TRRXITTE
-BITCOIN_CLI_NAME=TRRXITTE-cli
-BITCOIN_TX_NAME=TRRXITTE-tx
+BITCOIN_DAEMON_NAME=bitcoind
+BITCOIN_GUI_NAME=bitcoin-qt
+BITCOIN_CLI_NAME=bitcoin-cli
+BITCOIN_TX_NAME=bitcoin-tx
 
 AC_CANONICAL_HOST
 
@@ -760,12 +760,8 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([[
   #include <boost/thread.hpp>
   #include <boost/date_time/posix_time/posix_time_types.hpp>
   ]],[[
-#include <boost/chrono.hpp>  // Ensure this is included
-#if BOOST_VERSION <= 105600
-    boost::this_thread::sleep(boost::posix_time::milliseconds(0));
-#else
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(0));
-#endif
+  #if BOOST_VERSION <= 105600
+      boost::this_thread::sleep(boost::posix_time::milliseconds(0));
   #else
    choke me
   #endif

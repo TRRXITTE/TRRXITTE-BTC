@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="en">
+<!-- Mirrored from xbt-explorer.s3na.xyz/claim/14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 05 Apr 2025 01:57:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Language" content="en"><meta name="version" content="1.102.0-8730b94"><title>Bitcoin Classic Claim Wallet Address 14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj - Bitcoin Classic</title><link rel="icon" href="../favicon-32.png" sizes="32x32"><link rel="icon" href="../favicon-128.png" sizes="128x128"><link rel="icon" href="../favicon-180.png" sizes="180x180"><link rel="icon" href="../favicon-192.png" sizes="192x192"><link rel="stylesheet" href="../css/themes/darkly/bootstrap.min9723.css?h=1735107099"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css"><link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.3.2/styles/overlayscrollbars.min.css"><link rel="stylesheet" href="../css/style.min9723.css?h=1735107099"><link rel="stylesheet" href="../css/custom.min9723.css?h=1735107099"><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script><script type="text/javascript" src="../js/custom.js"></script><script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.3.2/browser/overlayscrollbars.browser.es6.min.js" integrity="sha512-jh4tHrf3Zaee6k2wOl1kVm4Gm5uIFbOQkUPfA419yLxADm1Q9jtihcGAJUl9ThBR8yc4/VYCOQCY/K87g14kSw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script>const { OverlayScrollbars } = OverlayScrollbarsGlobal;
+var isDocumentReady = false;
+
+/* special thanks to the stackoverflow community for the getParameterByName function: https://stackoverflow.com/a/901144/3038650 */
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+function fixFooterHeightAndPosition() {
+  const screenWidth = $(window).outerWidth();
+  let socialLinkHeight = 70;
+
+  if (screenWidth <= 575) {
+    // mobile
+    $('#footer-container').css('height', '70px');
+    socialLinkHeight = 40;
+  } else if (screenWidth >= 576 && screenWidth <= 991) {
+    // tablet
+    $('#footer-container').css('height', '70px');
+    socialLinkHeight = 42;
+  } else {
+    // desktop
+    $('#footer-container').css('height', '50px');
+    socialLinkHeight = 70;
+  }
+
+  if (!false) {
+    // wait a tick before fixing footer position to give time for elements to be rendered
+    setTimeout(function() {
+      // ensure footer is shown at the bottom of the viewport
+      const offset = (window.innerHeight - $('#footer-container').position().top - $('#footer-container').outerHeight());
+      $('#footer-container').css('margin-top', (offset > 0 ? offset - 1 : '10') + 'px');
+
+      if ('top' == 'side')
+        fixSidebarHeight();
+    }, 1);
+  } else {
+    // add spacing to the bottom of the body for the sticky footer
+    $('body').css('margin-bottom', ($('#footer-container').outerHeight() + 10) + 'px');
+
+    if ('top' == 'side')
+      fixSidebarHeight();
+  }
+
+  // fix social link font size
+  const fontSize = $('#footer-container').height() * (socialLinkHeight / 100);
+  $('#footer-container .social-link').css('font-size', fontSize);
+  $('#footer-container .social-link > img').css('width', fontSize + 'px').css('height', fontSize + 'px');
+}
+function enableTooltips() {
+  if ($().tooltip) {
+    // enable tooltips only if browser supports them
+    $('[data-bs-toggle="tooltip"]').tooltip();
+  }
+}
+function fixDataTableColumns() {
+  // wait 2 ticks before adjusting table columns to give time for elements to be rendered (1 tick doesn't seem to be enough for some tables)
+  setTimeout(function() {
+    // ensure columns are properly aligned
+    $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+  }, 2);
+}
+function rotateElement(elementSelector) {
+  const element = $(elementSelector);
+
+  if (element.length > 0) {
+    $({ deg: 0 }).animate({ deg: 360 }, {
+      duration: 2000,
+      step: function(deg) {
+        element.css({
+          transform: 'rotateY(' + deg + 'deg)'
+        });
+      },
+      done: function() {
+        setTimeout(function() {
+          rotateElement(elementSelector);
+        }, 1500);
+      }
+    });
+  }
+}
+function startRotateElement(elementSelector) {
+  setTimeout(function() {
+    rotateElement(elementSelector);
+  }, 100);
+}
+function update_block_and_connection_stats() {
+  const summary_headers = {
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
+    'footer-only': 'true'
+  };
+
+  $.ajax({url: '/ext/getsummary', headers: summary_headers, cache: false, success: function(json) {
+    $("#lblConnections").text(json.connections + ' connections');
+    $("#lblBlockcount").text(json.blockcount + ' blocks');
+  }});
+}
+$(document).on('click', 'button.btn-close', function (e) {
+  e.preventDefault();
+
+  $('.alert-dismissible').on('closed.bs.alert', function (e) {
+    e.preventDefault();
+    fixFooterHeightAndPosition();
+  });
+});
+$(document).on('click', 'button#search-header-button', function (e) {
+  if ($().tooltip)
+    $('#search-header-span').tooltip('hide');
+});
+$(window).resize(function () {
+  if (isDocumentReady) {
+    fixDataTableColumns();
+    fixFooterHeightAndPosition();
+  }
+});
+$(document).ready(function() {
+  if ('claim-address' != '')
+    $('#claim-address > a.nav-link').addClass('active');
+
+  $('#search-navbar-collapse').on('shown.bs.collapse', function (e) {
+    fixFooterHeightAndPosition();
+  });
+  $('#search-navbar-collapse').on('hidden.bs.collapse', function (e) {
+    fixFooterHeightAndPosition();
+  });
+
+  setInterval(function() {
+    update_block_and_connection_stats();
+  }, 60000);
+
+  update_block_and_connection_stats();
+  fixFooterHeightAndPosition();
+  enableTooltips();
+});</script><script>let topMenuExpanded = false;
+
+function fixTopMenuCollapse(isResizing) {
+  if (topMenuExpanded && isResizing) {
+    // force collapse the menu if it is open and the screen is being resized,
+    // otherwise it could cause problems with the market dropdown after resizing back and forth between mobile and desktop sizes
+    bootstrap.Collapse.getOrCreateInstance($('#navbar-collapse')).hide();
+    topMenuExpanded = false;
+  }
+
+  if ($().tooltip)
+    $('#navbar-toggler-span').tooltip('hide');
+
+  if (topMenuExpanded) {
+    $('#search-header-button').hide();
+    $('#search-navbar-collapse').addClass('d-none');
+    $('#navbar-collapse').css('max-height', ($(window).outerHeight() - ($('#main-header div.navbar-header').outerHeight()) - (false == true ? $('div#footer-container').outerHeight(true) : 0) - 20).toString() + 'px');
+  } else
+    $('#navbar-collapse').css('max-height', 'none');
+}
+function hideMarketDropdown() {
+  if ($('li#markets > div.dropdown-menu').hasClass('show')) {
+    // close the market dropdown which was left open
+    bootstrap.Dropdown.getOrCreateInstance($('li#markets > a.dropdown-toggle')).hide();
+  }
+}
+$(window).resize(function () {
+  if ($(window).outerWidth() < 992)
+    hideMarketDropdown();
+
+  fixTopMenuCollapse(true);
+});
+$(document).ready(function() {
+  $('#navbar-collapse').on('show.bs.collapse', function (e) {
+    topMenuExpanded = true;
+    fixTopMenuCollapse(false);
+  });
+  $('#navbar-collapse').on('shown.bs.collapse', function (e) {
+    // initialize the scrollbar only after the navbar collapse has finished since it goes too slow if initialized before
+    OverlayScrollbars($('#navbar-collapse')[0], {});
+  });
+  $('#navbar-collapse').on('hide.bs.collapse', function (e) {
+    topMenuExpanded = false;
+    fixTopMenuCollapse(false);
+    OverlayScrollbars($('#navbar-collapse')[0], {}).destroy();
+  });
+  $('#navbar-collapse').on('hidden.bs.collapse', function (e) {
+    $('#search-header-button').show();
+    $('#search-navbar-collapse').removeClass('d-none');
+  });
+});</script></head><body><div class="navbar fixed-top bg-dark navbar-dark" id="main-header"><div class="navbar navbar-expand-lg" style="padding-left:0;"><div class="container"><div class="navbar-header"><span id="navbar-toggler-span" alt="Toggle Menu" title="Toggle Menu" data-bs-toggle="tooltip" data-bs-placement="left"><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></span></div><a href="../index.html" alt="Bitcoin Classic Home" title="Bitcoin Classic Home" style="order:-1;" data-bs-toggle="tooltip" data-bs-placement="bottom"><img class="logo-main" src="../img/header-logo.png" style="margin:0;max-height:50px;"></a><div class="collapse navbar-collapse" id="navbar-collapse"><ul class="navbar-nav" style="width:100%;"><li class="nav-item" id="home"><a class="nav-link" href="../index.html"><span class="fa-solid fa-cubes"></span><span class="margin-left-5">Explorer</span></a></li><li class="nav-item" id="movement"><a class="nav-link" href="../movement.html"><span class="fa-regular fa-money-bill-1"></span><span class="margin-left-5">Movement</span></a></li><li class="nav-item" id="network"><a class="nav-link" href="../network.html"><span class="fa-solid fa-network-wired"></span><span class="margin-left-5">Network</span></a></li><li class="nav-item" id="richlist"><a class="nav-link" href="../richlist.html"><span class="fa-brands fa-btc"></span><span class="margin-left-5">Top 100</span></a></li><li class="nav-item" id="info"><a class="nav-link" href="../info.html"><span class="fa-solid fa-circle-info"></span><span class="margin-left-5">API</span></a></li><li class="nav-item" id="claim-address"><a class="nav-link" href="../claim.html"><span class="fa-regular fa-address-card"></span><span class="margin-left-5">Claim Address</span></a></li><li class="nav-item" id="orphans"><a class="nav-link" href="../orphans.html"><span class="fa-regular fa-rectangle-xmark"></span><span class="margin-left-5">Orphaned Blocks</span></a></li></ul></div><span id="search-header-span" alt="Search" title="Search" data-bs-toggle="tooltip" data-bs-placement="left"><button id="search-header-button" data-bs-toggle="collapse" data-bs-target="#search-navbar-collapse"><span class="fa-solid fa-magnifying-glass"></span></button></span></div></div><div class="collapse" id="search-navbar-collapse"><div class="navbar-nav align-items-lg-center search-box-custom" style="width:100%;"><form class="form-inline col-12 d-flex justify-content-center" method="post" action="https://xbt-explorer.s3na.xyz/search"><div class="input-group input-group-md search-for" style="width:100%;"><input class="form-control" type="text" name="search" placeholder="Search by block height, block hash, tx hash or address"><button class="btn btn-success btn-sm" type="submit">Search</button></div></form></div></div></div><div class="container marginTop80" id="body-container"><div id="main-container"><div id="main-child-container"><script>$(document).ready(function () {
+    $('#claimInstructions').on('show.bs.collapse', function () {
+      $('#showClaimInstructions').html('<i class="fa-solid fa-angle-down" style="margin-right:5px;"></i><span>Hide claim instructions</span>');
+    }).on('hide.bs.collapse', function () {
+      $('#showClaimInstructions').html('<i class="fa-solid fa-angle-up" style="margin-right:5px;"></i><span>Show claim instructions</span>');
+    }).on('shown.bs.collapse', function () {
+      fixFooterHeightAndPosition();
+    }).on('hidden.bs.collapse', function () {
+      fixFooterHeightAndPosition();
+    });
+    $('#claimForm').on('submit', function (e) {
+      e.preventDefault();
+      var address = $('input#address').val();
+      var message = $('input#message').val();
+      var signature = $('input#signature').val();
+      var recaptcha2 = ($('#g-recaptcha-response').length > 0 ? $('#g-recaptcha-response').val() : '');
+      var hcaptcha = ($('textarea[name^="h-captcha-response"]').length > 0 ? $('textarea[name^="h-captcha-response"]').val() : '');
+      
+      if (address == null || address.trim().length == 0) {
+        showClaimAlert('warning', 'Please enter the wallet address you wish to claim', false);
+        $('input#address').focus();
+      } else if (signature == null || signature.trim().length == 0) {
+        showClaimAlert('warning', 'Please enter the signature value from your wallet software', false);
+        $('input#signature').focus();
+      } else if (
+        (
+          '' == 'google_recaptcha2' &&
+          'checkbox' == 'checkbox' &&
+          $('#g-recaptcha-response').length > 0 &&
+          recaptcha2 == ''
+        ) ||
+        (
+          $('textarea[name^="h-captcha-response"]').length > 0 &&
+          hcaptcha == ''
+        )
+      ) {
+        showClaimAlert('warning', 'The captcha validation has not been set', false);
+      } else {
+        $('button.btn-success').attr('disabled', true);
+
+        if ('' == 'google_recaptcha2' && 'checkbox' == 'invisible') {
+          grecaptcha.execute();
+        } else if ('' == 'google_recaptcha3') {
+          grecaptcha.ready(function() {
+            grecaptcha.execute('', {action: 'submit'}).then(function(token) {
+              submitForm(token);
+            });
+          });
+        } else if (recaptcha2 != '') {
+          submitForm(recaptcha2);
+        } else if (hcaptcha != '') {
+          submitForm(hcaptcha);
+        } else {
+          submitForm('');
+        }
+      }
+    });
+    if ('14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj' != 'null' && '14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj' != '') {
+      $('<div id="claimAlert"></div>').insertBefore('#claimForm');
+      $('#claimAlert').html(generateAlertHTML('info', true, ('' == '' ? 'Unc' : 'C') + 'laimed address', '<strong>14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj</strong> is currently ' + ('' == '' ? 'un' : '') + 'claimed' + ('' == '' ? '' : ' as <strong>' + displayAsText('') + '.</strong>')));
+    }
+    if (true == true && true == true)
+      startRotateElement('img#header-img');
+  });
+  function displayAsText(str) {
+    return str.replace(/</g, '&#60;').replace(/>/g, '&#62;');
+  }
+  function showClaimAlert(claimClass, warnMsg, removedClaim) {
+    if ($('#claimAlert').length == 0)
+      $('<div id="claimAlert"></div>').insertBefore('#claimForm');
+    $('#claimAlert').html(generateAlertHTML(claimClass, true, (claimClass == 'success' ? (removedClaim ? 'Address claim removed successfully' : 'Address claimed successfully') : (claimClass == 'danger' ? 'Failed to claim address' : 'Required field missing')), (claimClass == 'success' ? '<strong>' + $('input#address').val() + '</strong> will now be referred to as <strong>' + (removedClaim ? $('input#address').val() : displayAsText($('#message').val())) + '</strong> throughout the website' : warnMsg) + '.'));
+    fixFooterHeightAndPosition();
+  }
+  function generateAlertHTML(alertClass, allowDismiss, headerText, msgText) {
+    return '<div class="alert alert-' + alertClass + (allowDismiss ? ' alert-dismissible fade show' : '') + '" role="alert">' +
+      (allowDismiss ? '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' : '') + 
+      '<div' + (msgText == null || msgText == '' ? '' : ' class="cardSpacer"') + '>' +
+      '<span class="fa-solid ' + (alertClass == 'success' ? 'fa-circle-check' : (alertClass == 'danger' ? 'fa-circle-exclamation' : (alertClass == 'info' ? 'fa-circle-info' : 'fa-triangle-exclamation'))) + '" style="margin-right:5px"></span>' +
+      '<strong>' + headerText + '</strong>' +
+      '</div>' +
+      (msgText == null || msgText == '' ? '' : '<span>' + msgText + '</span>') +
+      '</div>';
+  }
+  function submitForm(captchaData) {
+    const url = '/claim';
+
+    let postData = {
+      'address': $('input#address').val(),
+      'message': $('input#message').val(),
+      'signature': $('input#signature').val()
+    };
+
+    if ('' != '' && captchaData != '')
+      postData[''] = captchaData;
+
+    $.ajax({
+      type: 'post',
+      url: url,
+      data: postData
+    })
+    .done(function(data) {
+      showClaimAlert((data.status == 'success' ? 'success' : 'danger'), data.message, (data.status == 'success' && message == ''));
+
+      if (
+        '' == 'google_recaptcha2' &&
+        'checkbox' == 'checkbox'
+      ) {
+        // clear out the captcha to allow the form to be submitted again
+        grecaptcha.reset();
+      } else if (
+        '' == 'hcaptcha'
+      ) {
+        // clear out the captcha to allow the form to be submitted again
+        hcaptcha.reset()
+      }
+
+      $('button.btn-success').attr('disabled', false);
+    });
+  }
+  function onSubmit(token) {
+    submitForm(token);
+
+    // ensure the onSubmit event can fire again without needing to reload the page in the event that the server returns an error and the form must be submitted again
+    grecaptcha.reset();
+
+    $('button.btn-success').attr('disabled', false);
+  }</script><div class="col-xs-12 col-md-12"><div id="page-header-container" style="align-items:flex-start"><div id="header-img-container"><img id="header-img" src="../img/page-title-img.png"></div><div id="page-title-container"><h3 id="page-title">Bitcoin Classic Wallet Address Claim</h3><div class="sub-page-header text-muted">Verify ownership of your Bitcoin Classic wallet address and set a custom display name in the explorer</div></div></div><div class="cardSpacer clearfix"></div><div class="card card-default border-0 cardSpacer"><div class="card-header"><strong>Claim Wallet Address</strong></div><div class="card-body"><a class="instructions badge bg-primary" id="showClaimInstructions" href="#claimInstructions" style="font-size:100%;margin-bottom:15px;" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="claimInstructions"><i class="fa-solid fa-angle-up" style="margin-right:5px;"></i><span>Show claim instructions</span></a><div class="collapse" id="claimInstructions"><div class="alert alert-primary"><div><span>Use the</span><span class="fw-bold"> Sign Message</span><span> feature from your</span><span class="fw-bold"> Bitcoin Classic</span><span> wallet to verify ownership of a wallet address that belongs to you.</span></div><br><div>Enter the following data into the wallet software:</div><br><div><span class="fw-bold">Address:</span><span> 14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj</span></div><div><span class="fw-bold">Message:</span><span> &lt;display name from the form below&gt;</span></div><br><div><span>Click the</span><span class="fw-bold"> Sign Message</span><span> button in the wallet, and copy/paste the resulting</span><span class="fw-bold"> Signature</span><span> at the bottom of this form.</span></div><br><div><span>Finally, click the</span><span class="fw-bold"> Claim</span><span> button below to claim your address, which will display your custom display name instead of the default wallet address on this site.</span></div><br><div><span class="fw-bold">NOTE:</span><span> You can update your claimed address at any time, as often as you wish. To remove a previously claimed display name, simply sign a blank message to return the address back to its original value.</span></div></div></div><form id="claimForm"><div class="form-group"><fieldset class="entryField"><label class="form-label" for="address">Wallet Address</label><input class="form-control" id="address" type="text" value="14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj" readonly="readonly" maxlength="70"></fieldset></div><div class="form-group"><fieldset class="entryField"><label class="form-label mt-3" for="message">Display Name</label><input class="form-control" id="message" type="text" placeholder="Display Name" maxlength="50"></fieldset></div><div class="form-group"><fieldset class="entryField"><label class="form-label mt-3" for="signature">Signature</label><input class="form-control mb-3" id="signature" type="text" placeholder="Signature" maxlength="100"></fieldset></div><div class="form-group"><fieldset class="entryField"><button class="btn btn-success" type="submit">Claim</button></fieldset></div></form></div></div></div></div></div></div><div class="nav navbar navbar-default d-flex footer bg-dark navbar-dark" id="footer-container" role="navigation"><div class="col-4 navbar-nav"><ul class="nav justify-content-left"><li class="float-start"><a class="nav-link social-link border-0" href="https://t.me/BitcoinClassic2011" target="_blank" alt="Bitcoin Classic Telegram" title="Bitcoin Classic Telegram" data-bs-toggle="tooltip" data-bs-placement="top"><span class="vertical-align-middle fa-brands fa-telegram"></span></a></li></ul></div><div class="col-4 navbar-nav"><ul class="nav justify-content-center"><li class="text-center"><p><a class='nav-link poweredby' href='https://github.com/team-exor/eiquidus' target='_blank'>eIquidus v1.102.0-8730b94</a></p></li></ul></div><div class="col-4 navbar-nav"><ui class="nav justify-content-end"><label class="badge nav-link border-0 float-end" id="lblBlockcount"></label><label class="badge nav-link border-0 float-end" id="lblConnections"></label></ui></div></div></body>
+<!-- Mirrored from xbt-explorer.s3na.xyz/claim/14HpieZ4xQGfSfZ3CNNBW6qp94ShDvPYbj by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 05 Apr 2025 01:57:42 GMT -->
+</html>

@@ -3533,7 +3533,7 @@ bool CWallet::BackupWallet(const std::string& strDest)
 
                 try {
 #if BOOST_VERSION >= 104000
-                    boost::filesystem::copy_file(pathSrc, pathDest, boost::filesystem::copy_options::overwrite_existing);
+//                    boost::filesystem::copy_file(pathSrc, pathDest, boost::filesystem::copy_options::overwrite_existing);
 #else
                     boost::filesystem::copy_file(pathSrc, pathDest);
 #endif
