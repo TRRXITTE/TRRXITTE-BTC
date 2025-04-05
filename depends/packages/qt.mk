@@ -116,18 +116,17 @@ $(package)_config_opts += -no-feature-undoview
 $(package)_config_opts += -no-feature-vnc
 $(package)_config_opts += -no-feature-xml
 
-  # Updated macOS-specific options
-  $(package)_config_opts_darwin = -no-dbus
-  $(package)_config_opts_darwin += -no-opengl
-  $(package)_config_opts_darwin += -platform macx-clang
-  ifneq ($(build_os),darwin)
-    $(package)_config_opts_darwin += -xplatform macx-clang-linux
-    $(package)_config_opts_darwin += -device-option MAC_SDK_PATH=$(OSX_SDK)
-    $(package)_config_opts_darwin += -device-option MAC_SDK_VERSION=$(OSX_SDK_VERSION)
-    $(package)_config_opts_darwin += -device-option CROSS_COMPILE="$(host)-"
-    $(package)_config_opts_darwin += -device-option MAC_MIN_VERSION=$(OSX_MIN_VERSION)
-    $(package)_config_opts_darwin += -device-option MAC_TARGET=$(host)
-  endif
+$(package)_config_opts_darwin = -no-dbus
+$(package)_config_opts_darwin += -no-opengl
+
+ifneq ($(build_os),darwin)
+$(package)_config_opts_darwin += -xplatform macx-clang-linux
+$(package)_config_opts_darwin += -device-option MAC_SDK_PATH=$(OSX_SDK)
+$(package)_config_opts_darwin += -device-option MAC_SDK_VERSION=$(OSX_SDK_VERSION)
+$(package)_config_opts_darwin += -device-option CROSS_COMPILE="$(host)-"
+$(package)_config_opts_darwin += -device-option MAC_MIN_VERSION=$(OSX_MIN_VERSION)
+$(package)_config_opts_darwin += -device-option MAC_TARGET=$(host)
+endif
 
 $(package)_config_opts_linux  = -qt-xkbcommon-x11
 $(package)_config_opts_linux += -qt-xcb
@@ -162,7 +161,7 @@ $(package)_config_opts_android += -no-eglfs
 $(package)_config_opts_android += -no-dbus
 $(package)_config_opts_android += -opengl es2
 $(package)_config_opts_android += -qt-freetype
-$(package)_config_optsANDROID += -no-fontconfig
+$(package)_config_opts_android += -no-fontconfig
 $(package)_config_opts_android += -L $(host_prefix)/lib
 $(package)_config_opts_android += -I $(host_prefix)/include
 
@@ -171,10 +170,8 @@ $(package)_config_opts_armv7a_android += -android-arch armeabi-v7a
 $(package)_config_opts_x86_64_android += -android-arch x86_64
 $(package)_config_opts_i686_android += -android-arch i686
 
-  # Updated build environment with corrected LDFLAGS
-  $(package)_build_env  = QT_RCC_TEST=1
-  $(package)_build_env += QT_RCC_SOURCE_DATE_OVERRIDE=1
-  $(package)_build_env += LDFLAGS="-F$(OSX_SDK)/System/Library/Frameworks -framework CoreFoundation -framework ApplicationServices"
+$(package)_build_env  = QT_RCC_TEST=1
+$(package)_build_env += QT_RCC_SOURCE_DATE_OVERRIDE=1
 endef
 
 define $(package)_fetch_cmds
@@ -184,6 +181,7 @@ $(call fetch_file,$(package),$($(package)_download_path),$($(package)_qttools_fi
 $(call fetch_file,$(package),$($(package)_download_path),$($(package)_qtcharts_file_name),$($(package)_qtcharts_file_name),$($(package)_qtcharts_sha256_hash)) && \
 $(call fetch_file,$(package),$($(package)_download_path),$($(package)_qtsvg_file_name),$($(package)_qtsvg_file_name),$($(package)_qtsvg_sha256_hash))
 endef
+
 define $(package)_extract_cmds
   mkdir -p $($(package)_extract_dir) && \
   echo "$($(package)_sha256_hash)  $($(package)_source)" > $($(package)_extract_dir)/.$($(package)_file_name).hash && \
@@ -201,10 +199,7 @@ define $(package)_extract_cmds
   mkdir qtcharts && \
   tar --no-same-owner --strip-components=1 -xf $($(package)_source_dir)/$($(package)_qtcharts_file_name) -C qtcharts && \
   mkdir qtsvg && \
-  tar --no-same-owner --strip-components=1 -xf $($(package)_source_dir)/$($(package)_qtsvg_file_name) -C qtsvg && \
-  cp -f qtbase/configure . && \
-  cp -f qtbase/mkspecs/linux-g++-64/qmake.conf .qmake.conf && \
-  chmod +x configure
+  tar --no-same-owner --strip-components=1 -xf $($(package)_source_dir)/$($(package)_qtsvg_file_name) -C qtsvg
 endef
 
 define $(package)_preprocess_cmds
@@ -218,6 +213,7 @@ define $(package)_preprocess_cmds
   cp -f qtbase/mkspecs/macx-clang/Info.plist.app qtbase/mkspecs/macx-clang-linux/ &&\
   cp -f qtbase/mkspecs/macx-clang/qplatformdefs.h qtbase/mkspecs/macx-clang-linux/ &&\
   cp -f $($(package)_patch_dir)/mac-qmake.conf qtbase/mkspecs/macx-clang-linux/qmake.conf && \
+  cp -f $($(package)_patch_dir)/configure configure && \
   cp -f $($(package)_patch_dir)/configure.json configure.json && \
   cp -f $($(package)_patch_dir)/qt.pro qt.pro && \
   cp -f $($(package)_patch_dir)/.gitmodules .gitmodules && \
@@ -232,7 +228,7 @@ define $(package)_preprocess_cmds
   patch -p1 -i $($(package)_patch_dir)/fix_android_jni_static.patch &&\
   patch -p1 -i $($(package)_patch_dir)/fix_riscv64_arch.patch &&\
   patch -p1 -i $($(package)_patch_dir)/no-xlib.patch &&\
-  patch -p1 -i $ kerosene &&\
+  patch -p1 -i $($(package)_patch_dir)/fix_qttools.patch &&\
   echo "!host_build: QMAKE_CFLAGS     += $($(package)_cflags) $($(package)_cppflags)" >> qtbase/mkspecs/common/gcc-base.conf && \
   echo "!host_build: QMAKE_CXXFLAGS   += $($(package)_cxxflags) $($(package)_cppflags)" >> qtbase/mkspecs/common/gcc-base.conf && \
   echo "!host_build: QMAKE_LFLAGS     += $($(package)_ldflags)" >> qtbase/mkspecs/common/gcc-base.conf && \
