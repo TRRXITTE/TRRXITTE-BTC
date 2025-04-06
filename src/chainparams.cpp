@@ -83,15 +83,15 @@ public:
         pchMessageStart[0] = 0xf1;
         pchMessageStart[1] = 0xa2;
         pchMessageStart[2] = 0xb3;
-        pchMessageStart[3] = 0xc4;
+        pchMessageStart[3] = 0xc5;
         nDefaultPort = 55553; // New P2P port
         nPruneAfterHeight = 1000;
 
         // New genesis block
-        genesis = CreateGenesisBlock(1743436800, 5897362, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
+        genesis = CreateGenesisBlock(1743436800, 2980130, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000083ecfc7088980ca7bf798d2e8bfd51823f809a9d3db946f82d046a94b8c"));
-        assert(genesis.hashMerkleRoot == uint256S("0x8bae0c69ee37acb691c9a7dcb25496858b5a8c08dea826b4e4f83888f5f2f827"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000091c1a036d2c19df5c5b1107eb2a889fcad277ba02c212f6c975358636cd"));
+        assert(genesis.hashMerkleRoot == uint256S("0xaf0caed947f414d87d28b43fb763406c8ef8351bd2621f6351e732ad4e5854f1"));
 
         // Seed nodes (update with your own if desired)
         vSeeds.push_back(CDNSSeedData("seed-one.btc.trrxitte.com", "seed-two.btc.trrxitte.com"));
