@@ -10,7 +10,7 @@
 #endif
 
 #include <stdint.h>
-
+#include <endian.h>
 #include "compat/endian.h"
 
 uint16_t static inline ReadLE16(const unsigned char* ptr)
