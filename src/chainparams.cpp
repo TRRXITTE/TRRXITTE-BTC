@@ -36,7 +36,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "TRRXITTE BTC - 31/Mar/2025"; // Updated timestamp
-    const CScript genesisOutputScript = CScript() << ParseHex("02b5a03095af20ff5ca2a8dcf43de08e8a4de28c00338a8beb90bdbb01573cb3a9") << OP_CHECKSIG;
+    const CScript genesisOutputScript = CScript() << ParseHex("02b5a03095af20ff5ca2a8dcf43de08e8a4de28c00338a8beb90bdbb01573cb3a904b5a03095af20ff5ca2a8dcf43de08e8a4de28c00338a8beb90bdbb01573cb3a9e2eecf4dbfa8f8eabf10f6c0eabf03ab4eecf5eabf03abf8eabf10f6c0eabfc2e") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
