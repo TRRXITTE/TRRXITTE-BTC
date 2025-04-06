@@ -36,7 +36,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "TRRXITTE BTC - 31/Mar/2025"; // Updated timestamp
-    const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+    const CScript genesisOutputScript = CScript() << ParseHex("04b5a03095af20ff5ca2a8dcf43de08e8a4de28c00338a8beb90bdbb01573cb3a9c6adef0bad132255ea5279ec7b8c4f60ea6ae36bbd461728624fbdcde9a317e4") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -88,10 +88,10 @@ public:
         nPruneAfterHeight = 1000;
 
         // New genesis block
-        genesis = CreateGenesisBlock(1743436800, 5897362, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
+        genesis = CreateGenesisBlock(1743436800, 1110121, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000083ecfc7088980ca7bf798d2e8bfd51823f809a9d3db946f82d046a94b8c"));
-        assert(genesis.hashMerkleRoot == uint256S("0x8bae0c69ee37acb691c9a7dcb25496858b5a8c08dea826b4e4f83888f5f2f827"));
+        assert(consensus.hashGenesisBlock == uint256S("0x000006354a219ae41b91da59224e89d257291337b4353a21096f7907e0d98c29"));
+        assert(genesis.hashMerkleRoot == uint256S("0xab809af403c4af8a43ebdc96fb6099b8031788ad81e172385d8090be2a8c1d61"));
 
         // Seed nodes (update with your own if desired)
         vSeeds.push_back(CDNSSeedData("seed-one.btc.trrxitte.com", "seed-two.btc.trrxitte.com"));
