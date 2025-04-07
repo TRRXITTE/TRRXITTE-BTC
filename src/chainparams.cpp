@@ -36,83 +36,99 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "TRRXITTE BTC - 31/Mar/2025"; // Updated timestamp
-    const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+    const CScript genesisOutputScript = CScript() << ParseHex("04b5a03095af20ff5ca2a8dcf43de08e8a4de28c00338a8beb90bdbb01573cb3a9c6adef0bad132255ea5279ec7b8c4f60ea6ae36bbd461728624fbdcde9a317e4") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
 /**
  * Main network (TRRXITTE BTC)
  */
-class CMainParams : public CChainParams {
-public:
-    CMainParams() {
-        strNetworkID = "main";
-        consensus.nSubsidyHalvingInterval = 210000; // Halving every 210,000 blocks (adjust as needed)
-        consensus.nMajorityEnforceBlockUpgrade = 750;
-        consensus.nMajorityRejectBlockOutdated = 950;
-        consensus.nMajorityWindow = 1000;
-        consensus.BIP34Height = 0; // Enforce BIP34 from genesis
-        consensus.BIP34Hash = uint256S("0x0000000000000000000000000000000000000000000000000000000000000000"); // Placeholder, updated below
-        consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // Easier initial difficulty
-        consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // 2 weeks for difficulty adjustment
-        consensus.nPowTargetSpacing = 10 * 60; // 10 minutes block time
-        consensus.nSwitchHeight = 10000; // Optional: adjust if using dynamic spacing
-        consensus.nNewPowTargetSpacing = 140; // Optional: adjust if using dynamic spacing
-        consensus.fPowAllowMinDifficultyBlocks = false;
-        consensus.fPowNoRetargeting = false;
-        consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
-        consensus.nMinerConfirmationWindow = 2016;
-
-        // BIP9 deployments (optional, adjust or remove)
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
-
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1738032253; // January 28, 2025
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1769568253; // January 28, 2026
-
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1746057600; // March 31, 2025
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1777593600; // March 31, 2026
-
-        consensus.nMinimumChainWork = uint256S("0x00"); // Reset for new chain
-        consensus.pownewlimit = uint256S("0000000000000023CA7500000000000000000000000000000000000000000000"); // Adjust if needed
-
-        // Unique network magic bytes
-        pchMessageStart[0] = 0xf1;
-        pchMessageStart[1] = 0xa2;
-        pchMessageStart[2] = 0xb3;
-        pchMessageStart[3] = 0xc4;
-        nDefaultPort = 55553; // New P2P port
-        nPruneAfterHeight = 1000;
-
-        // New genesis block
-        genesis = CreateGenesisBlock(1743436800, 5897362, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
-        consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000083ecfc7088980ca7bf798d2e8bfd51823f809a9d3db946f82d046a94b8c"));
-        assert(genesis.hashMerkleRoot == uint256S("0x8bae0c69ee37acb691c9a7dcb25496858b5a8c08dea826b4e4f83888f5f2f827"));
-
-        // Seed nodes (update with your own if desired)
-        vSeeds.push_back(CDNSSeedData("seed-one.btc.trrxitte.com", "seed-two.btc.trrxitte.com"));
-
-        // Address prefixes (unique from Bitcoin)
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 48); // 'M'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 50); // 'N'
-        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 176); // 'X'
-        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
-
-        vFixedSeeds.clear(); // No fixed seeds initially
-
-        fMiningRequiresPeers = true;
-        fDefaultConsistencyChecks = false;
-        fRequireStandard = true;
-        fMineBlocksOnDemand = false;
-        fTestnetToBeDeprecatedFieldRPC = false;
-    }
-
-};
+ class CMainParams : public CChainParams {
+    public:
+        CMainParams() {
+            strNetworkID = "main";
+            consensus.nSubsidyHalvingInterval = 210000; // Halving every 210,000 blocks (adjust as needed)
+            consensus.nMajorityEnforceBlockUpgrade = 750;
+            consensus.nMajorityRejectBlockOutdated = 950;
+            consensus.nMajorityWindow = 1000;
+            consensus.BIP34Height = 0; // Enforce BIP34 from genesis
+            consensus.BIP34Hash = uint256S("0x000006354a219ae41b91da59224e89d257291337b4353a21096f7907e0d98c29"); // Updated to genesis block hash
+            consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // Easier initial difficulty
+            consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // 2 weeks for difficulty adjustment
+            consensus.nPowTargetSpacing = 10 * 60; // 10 minutes block time
+            consensus.nSwitchHeight = 10000; // Optional: adjust if using dynamic spacing
+            consensus.nNewPowTargetSpacing = 140; // Optional: adjust if using dynamic spacing
+            consensus.fPowAllowMinDifficultyBlocks = false;
+            consensus.fPowNoRetargeting = false;
+            consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
+            consensus.nMinerConfirmationWindow = 2016;
+    
+            // BIP9 deployments (optional, adjust or remove)
+            consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
+            consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
+            consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
+    
+            consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
+            consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1738032253; // January 28, 2025
+            consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1769568253; // January 28, 2026
+    
+            consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
+            consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1746057600; // March 31, 2025
+            consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1777593600; // March 31, 2026
+    
+            consensus.nMinimumChainWork = uint256S("0x00"); // Reset for new chain
+            consensus.pownewlimit = uint256S("0000000000000023CA7500000000000000000000000000000000000000000000"); // Adjust if needed
+    
+            // Unique network magic bytes
+            pchMessageStart[0] = 0xf1;
+            pchMessageStart[1] = 0xa2;
+            pchMessageStart[2] = 0xb3;
+            pchMessageStart[3] = 0xc4;
+            nDefaultPort = 55553; // New P2P port
+            nPruneAfterHeight = 1000;
+    
+            // New genesis block
+            genesis = CreateGenesisBlock(1743436800, 1110121, 0x1e0ffff0, 1, 50 * COIN); // Timestamp: March 31, 2025
+            consensus.hashGenesisBlock = genesis.GetHash();
+            assert(consensus.hashGenesisBlock == uint256S("0x000006354a219ae41b91da59224e89d257291337b4353a21096f7907e0d98c29"));
+            assert(genesis.hashMerkleRoot == uint256S("0xab809af403c4af8a43ebdc96fb6099b8031788ad81e172385d8090be2a8c1d61"));
+    
+            // Update BIP34Hash to match the genesis block hash
+            consensus.BIP34Hash = consensus.hashGenesisBlock;
+    
+            // Checkpoint for Block 0 (genesis block)
+            checkpointData = (CCheckpointData){
+                boost::assign::map_list_of
+                (0, uint256S("0x000006354a219ae41b91da59224e89d257291337b4353a21096f7907e0d98c29")),
+                1743436800, // Genesis timestamp
+                0,          // Total work (0 for genesis)
+                0           // Estimated hashes per second
+            };
+    
+            // Seed nodes (update with your own if desired)
+            vSeeds.push_back(CDNSSeedData("seed-one.btc.trrxitte.com", "seed-two.btc.trrxitte.com"));
+    
+            // Address prefixes (unique from Bitcoin)
+            base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 48); // 'M'
+            base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 50); // 'N'
+            base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 176); // 'X'
+            base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
+            base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
+    
+            vFixedSeeds.clear(); // No fixed seeds initially
+    
+            fMiningRequiresPeers = true;
+            fDefaultConsistencyChecks = false;
+            fRequireStandard = true;
+            fMineBlocksOnDemand = false;
+            fTestnetToBeDeprecatedFieldRPC = false;
+        }
+    
+        // Getter for the genesis block (for explorer compatibility)
+        const CBlock& GetGenesisBlock() const {
+            return genesis;
+        }
+    };
 class CTestNetParams : public CChainParams {
     public:
         CTestNetParams() {
