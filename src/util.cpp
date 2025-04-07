@@ -474,7 +474,7 @@ boost::filesystem::path GetDefaultDataDir()
     return pathRet / "Library/Application Support/TRRXITTE";
 #else
     // Unix
-    return pathRet / ".trrxitte";
+    return pathRet / ".TRRXITTE";
 #endif
 #endif
 }
